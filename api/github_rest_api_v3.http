@@ -1,0 +1,16 @@
+
+
+GET https://api.github.com
+Accept: application/vnd.github.v3+json
+
+###
+GET https://api.github.com/users/Ayush783
+
+###
+GET https://api.github.com/users/Ayush783/following
+
+###
+GET https://api.github.com/repos/Ayush783/Coronavirus_tracker_app/commits
+
+###
+GET https://api.github.com/users/sgshubham98/starred
