@@ -4,10 +4,17 @@ import 'package:github_profile_analyser/services/api.dart';
 class DataRepository {
   static final api = API();
   final apiService = APIService(api);
-  getData() async {
-    final Map<String, String> data = await apiService.getUserData('Ayush783');
-    Map map = Map.fromIterable(endpoints,
-        key: (k) => endpoints, value: (v) => data[endpoints]);
+  Future<Map> getData() async {
+    Map<String,dynamic> map={};
+    final Map data = await apiService.getUserData('Ayush783');
+    print(data);
+    if(data!=null){
+    for(int i =0; i < endpoints.length ; i++){
+      if(data.containsKey(endpoints[i])){
+        map[endpoints[i]] = data[endpoints[i]];
+      }
+    }
+    }
     return map;
   }
 

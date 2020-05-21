@@ -5,6 +5,8 @@ Accept: application/vnd.github.v3+json
 
 ###
 GET https://api.github.com/users/Ayush783
+Authorization: Token fef05990dc9d5ceb98c14b01da79d0d3ab83d683
+
 
 ###
 GET https://api.github.com/users/Ayush783/following
