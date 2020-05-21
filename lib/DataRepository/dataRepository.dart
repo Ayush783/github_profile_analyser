@@ -7,7 +7,6 @@ class DataRepository {
   Future<Map> getData() async {
     Map<String,dynamic> map={};
     final Map data = await apiService.getUserData('Ayush783');
-    print(data);
     if(data!=null){
     for(int i =0; i < endpoints.length ; i++){
       if(data.containsKey(endpoints[i])){
@@ -15,6 +14,7 @@ class DataRepository {
       }
     }
     }
+    print(map);
     return map;
   }
 

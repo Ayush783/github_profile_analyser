@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void navigationPage() {
-    Navigator.pushReplacementNamed(context, 'home');
+    Navigator.pushReplacementNamed(context, 'search');
   }
 
   @override
@@ -44,8 +44,9 @@ class _SplashScreenState extends State<SplashScreen> {
             left: size.width*0.3,
             bottom: size.width*0.3,
             child: Text(
-        'Github Manager',
+        'Github Explorer',
         style: new TextStyle(
+           fontFamily: 'Sans',
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
             foreground: Paint()..shader = linearGradient),
