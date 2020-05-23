@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
-Widget searchUser(String value){
+Widget searchUser(Function(String) function){
   return TextField(
-    onChanged: (newValue){
-      value = newValue;
-    },
+    onChanged: function,
                   showCursor: false,
                   style: TextStyle(fontFamily: 'Sans'),
                   decoration: InputDecoration(

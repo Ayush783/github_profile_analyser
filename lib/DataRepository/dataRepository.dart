@@ -1,12 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:github_profile_analyser/services/APIService.dart';
 import 'package:github_profile_analyser/services/api.dart';
 
 class DataRepository {
   static final api = API();
   final apiService = APIService(api);
-  Future<Map> getData() async {
+  Future<User> getData(String user) async {
     Map<String,dynamic> map={};
-    final Map data = await apiService.getUserData('Ayush783');
+    final Map data = await apiService.getUserData(user);
     if(data!=null){
     for(int i =0; i < endpoints.length ; i++){
       if(data.containsKey(endpoints[i])){
@@ -14,8 +15,17 @@ class DataRepository {
       }
     }
     }
-    print(map);
-    return map;
+    return User(map: map);
+  }
+
+  Future<List<dynamic>> getRepoData(String id)async{
+    final List<dynamic> data = await apiService.getUserRepoData(id);
+    return data;
+  }
+
+  Future<List<dynamic>> getStarData(String id)async{
+    final List<dynamic> data = await apiService.getUserStarredData(id);
+    return data;
   }
 
   List<String> endpoints = [
@@ -29,4 +39,9 @@ class DataRepository {
     'followers',
     'following'
   ];
+}
+
+class User{
+  final Map map;
+  User({@required this.map});
 }

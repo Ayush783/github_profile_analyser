@@ -11,11 +11,32 @@ class APIService{
 
   Future<Map<String,dynamic>> getUserData(String user)async{
     final uri = api.userUri().toString()+'/$user';
-    print(uri);
     final response = await http.get(uri, headers: {'Authorization':'Token $access_token'});
     if(response.statusCode==200){
       final data = jsonDecode(response.body);
       return data;
+    }
+    throw response;
+  }
+
+  Future<List<dynamic>> getUserRepoData(String user)async{
+    final uri = api.userUri().toString()+'/$user'+'/repos';
+    final response = await http.get(uri , headers: {'Authorization': 'Token $access_token'});
+    if(response.statusCode==200){
+      final List<dynamic> data = json.decode(response.body);
+      if(data.isNotEmpty)
+        return data;
+    }
+    throw response;
+  }
+
+  Future<List<dynamic>> getUserStarredData(String user)async{
+    final uri = api.userUri().toString()+'/$user'+'/starred';
+    final response = await http.get(uri , headers: {'Authorization': 'Token $access_token'});
+    if(response.statusCode==200){
+      final List<dynamic> data = json.decode(response.body);
+      if(data.isNotEmpty)
+        return data;
     }
     throw response;
   }
