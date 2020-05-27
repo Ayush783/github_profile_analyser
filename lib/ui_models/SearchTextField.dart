@@ -5,26 +5,16 @@ Widget searchUser(Function(String) function){
   return TextField(
     onChanged: function,
                   showCursor: false,
+                  textAlign: TextAlign.center,
                   style: TextStyle(fontFamily: 'Sans'),
                   decoration: InputDecoration(
                     hintText: "Enter Username",
-                    prefixIcon: Icon(
-                      MaterialCommunityIcons.account_search,
-                      color: Colors.black,
-                    ),
+                    prefixIcon: Icon(MaterialCommunityIcons.account_search_outline,color: Colors.grey[800],),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(35),
-                      borderSide: BorderSide(
-                        width: 1.3,
-                        color: Colors.black,
-                      ),
+                      borderSide: BorderSide.none
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(35),
-                      borderSide: BorderSide(
-                        width: 1.3,
-                        color: Colors.black,
-                      ),
+                      borderSide: BorderSide.none
                     ),
                     hintStyle: TextStyle(fontFamily: 'Sans'),
                   ),

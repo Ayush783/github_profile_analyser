@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:github_profile_analyser/DataRepository/dataRepository.dart';
 import 'package:github_profile_analyser/screens/SearchScreen.dart';
-import 'package:github_profile_analyser/screens/splashScreen.dart';
 import 'package:provider/provider.dart';
 void main() => runApp(MyApp());
 
@@ -11,11 +10,8 @@ class MyApp extends StatelessWidget {
     return Provider(
       create:(context)=> DataRepository(),
           child: MaterialApp(
-        initialRoute: 'splash',
-          routes: {
-            'splash': (context) => SplashScreen(),
-            'search': (context) => SearchScreen()
-          },
+            theme: ThemeData(backgroundColor: Colors.grey),
+        home: SearchScreen(),
           debugShowCheckedModeBanner: false,
       ),
     );

@@ -18,14 +18,13 @@ class DataRepository {
     return User(map: map);
   }
 
-  Future<List<dynamic>> getRepoData(String id)async{
-    final List<dynamic> data = await apiService.getUserRepoData(id);
-    return data;
-  }
-
-  Future<List<dynamic>> getStarData(String id)async{
-    final List<dynamic> data = await apiService.getUserStarredData(id);
-    return data;
+  Future<UserRepo> getRepoData(String id)async{
+    final List<dynamic> repoData = await apiService.getUserRepoData(id);
+    final List<dynamic> starData = await apiService.getUserStarredData(id);
+    final Map map = {};
+    map['repo'] = List.from(repoData);
+    map['star'] = List.from(starData);
+    return UserRepo(map: map);
   }
 
   List<String> endpoints = [
@@ -33,15 +32,21 @@ class DataRepository {
     'avatar_url',
     'html_url',
     'name',
+    'blog',
+    'location',
     'email',
     'bio',
     'public_repos',
     'followers',
-    'following'
+    'following',
   ];
 }
 
 class User{
   final Map map;
   User({@required this.map});
+}
+class UserRepo{
+  final Map map;
+  UserRepo({@required this.map});
 }

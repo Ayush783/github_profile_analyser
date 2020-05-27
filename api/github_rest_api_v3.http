@@ -4,8 +4,8 @@ GET https://api.github.com
 Accept: application/vnd.github.v3+json
 
 ###
-GET https://api.github.com/users/sgshubham98/starred
-Authorization: Token 92b348f91b89929da99f569ca294c2941461a0f5
+GET https://api.github.com/users/sgshubham98
+Authorization: Token 
 
 
 ###
