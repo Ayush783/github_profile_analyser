@@ -5,6 +5,7 @@ import 'package:github_profile_analyser/DataRepository/dataRepository.dart';
 import 'package:github_profile_analyser/ui_models/blogButton.dart';
 import 'package:github_profile_analyser/ui_models/gitbutton.dart';
 import 'package:github_profile_analyser/ui_models/gmailButton.dart';
+import 'package:github_profile_analyser/ui_models/shareButton.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -104,7 +105,12 @@ class _AboutScreenState extends State<AboutScreen> {
           size: 30,
         );
       });
-      final url = 'https://${user.map['email']}';
+      final Uri mail = Uri(
+        scheme: 'mailto',
+        path: '${user.map['email']}'
+      );
+      print(mail);
+      final url = mail.toString();
       if (await canLaunch(url)) {
         await launch(url);
         showError = false;
@@ -196,43 +202,12 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             if(showError)
             Text('Cannot launch url',style: TextStyle(fontFamily: 'Sans',fontSize: 12,color: Colors.red),),
-            RawMaterialButton(
-              elevation: 10,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  side: BorderSide(width: 0.8, color: Colors.black)),
-              onPressed: shareProfile,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 140,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'Share Profile  ',
-                        style: TextStyle(
-                            fontFamily: 'Sans',
-                            color: Colors.green,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Icon(
-                        MaterialCommunityIcons.share,
-                        color: Colors.green,
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
+            shareButton(shareProfile)
           ],
         ),
       ),
     ));
   }
-
-  
- 
 }
 
   

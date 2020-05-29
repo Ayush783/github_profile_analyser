@@ -1,16 +1,17 @@
 
 
-GET https://api.github.com
+GET https://api.github.com/timeline
 Accept: application/vnd.github.v3+json
 
+
 ###
-GET https://api.github.com/users/sgshubham98
+GET https://api.github.com/users/sgshubham98/repos
 Authorization: Token 
 
 
 ###
-GET https://api.github.com/repos/sgshubham98/android-messaging/commits
-
+GET https://api.github.com/repos/sgshubham98/android-messaging/contributors
+Authorization: Token 
 ###
 GET https://api.github.com/repos/Ayush783/Coronavirus_tracker_app/commits
 

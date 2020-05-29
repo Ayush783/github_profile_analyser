@@ -21,9 +21,13 @@ class DataRepository {
   Future<UserRepo> getRepoData(String id)async{
     final List<dynamic> repoData = await apiService.getUserRepoData(id);
     final List<dynamic> starData = await apiService.getUserStarredData(id);
+    final List<dynamic> flwrData = await apiService.getUserFollowerData(id);
+    final List<dynamic> flwngData = await apiService.getUserFollowingData(id);
     final Map map = {};
     map['repo'] = List.from(repoData);
     map['star'] = List.from(starData);
+    map['followers']=List.from(flwrData);
+    map['following']=List.from(flwngData);
     return UserRepo(map: map);
   }
 

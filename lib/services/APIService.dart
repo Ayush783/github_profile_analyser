@@ -20,7 +20,7 @@ class APIService{
   }
 
   Future<List<dynamic>> getUserRepoData(String user)async{
-    final uri = api.userUri().toString()+'/$user'+'/repos';
+    final uri = api.userUri().toString()+'/$user'+'/repos?page=1&per_page=100';
     final response = await http.get(uri , headers: {'Authorization': 'Token $access_token'});
     if(response.statusCode==200){
       final List<dynamic> data = json.decode(response.body);
@@ -31,7 +31,27 @@ class APIService{
   }
 
   Future<List<dynamic>> getUserStarredData(String user)async{
-    final uri = api.userUri().toString()+'/$user'+'/starred';
+    final uri = api.userUri().toString()+'/$user'+'/starred?page=1&per_page=100';
+    final response = await http.get(uri , headers: {'Authorization': 'Token $access_token'});
+    if(response.statusCode==200){
+      final List<dynamic> data = json.decode(response.body);
+      if(data.isNotEmpty)
+        return data;
+    }
+    throw response;
+  }
+  Future<List<dynamic>> getUserFollowerData(String user)async{
+    final uri = api.userUri().toString()+'/$user'+'/followers?page=1&per_page=100';
+    final response = await http.get(uri , headers: {'Authorization': 'Token $access_token'});
+    if(response.statusCode==200){
+      final List<dynamic> data = json.decode(response.body);
+      if(data.isNotEmpty)
+        return data;
+    }
+    throw response;
+  }
+  Future<List<dynamic>> getUserFollowingData(String user)async{
+    final uri = api.userUri().toString()+'/$user'+'/following?page=1&per_page=100';
     final response = await http.get(uri , headers: {'Authorization': 'Token $access_token'});
     if(response.statusCode==200){
       final List<dynamic> data = json.decode(response.body);

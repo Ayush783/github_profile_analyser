@@ -17,19 +17,24 @@ class _SearchScreenState extends State<SearchScreen>
   String username;
   bool isVisible;
   bool isVisible2;
+  AnimationController _controller;
 
-  waitTime()async{
+  waitTime() async {
     await Future.delayed(Duration(milliseconds: 600));
     setState(() {
       isVisible2 = true;
     });
   }
+
   @override
   void initState() {
     super.initState();
     username = '';
+    _controller =
+        AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _controller.forward();
     isVisible = false;
-    isVisible2=false;
+    isVisible2 = false;
     _widget = Text(
       "Go",
       style: TextStyle(fontFamily: 'Sans', color: Colors.white, fontSize: 16),
@@ -79,9 +84,9 @@ class _SearchScreenState extends State<SearchScreen>
                       Animation<double> animation,
                       Animation<double> secAnimation) {
                     return Provider<User>.value(
-                        value: user, child: Provider<UserRepo>.value(
-                          value: userRepo,
-                          child: Dashboard()));
+                        value: user,
+                        child: Provider<UserRepo>.value(
+                            value: userRepo, child: Dashboard()));
                   },
                   transitionDuration: Duration(milliseconds: 360),
                   transitionsBuilder: (BuildContext cpntext,
@@ -90,7 +95,10 @@ class _SearchScreenState extends State<SearchScreen>
                       Widget child) {
                     animation = CurvedAnimation(
                         parent: animation, curve: Curves.easeIn);
-                    return ScaleTransition(scale: animation,child: child,);
+                    return ScaleTransition(
+                      scale: animation,
+                      child: child,
+                    );
                   }));
         }
       } catch (e) {
@@ -104,34 +112,49 @@ class _SearchScreenState extends State<SearchScreen>
       }
     }
 
+    Future<bool> _willpop() async {
+      return false;
+    }
+
     final size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Stack(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.only(
-                right: size.width * 0.1,
-                left: size.width * 0.178,
-                top: size.height * 0.2,
+    return WillPopScope(
+      onWillPop: _willpop,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          body: Stack(
+            children: <Widget>[
+              AnimatedBuilder(
+                animation: _controller,
+                builder: (_, child) {
+                  return Transform.translate(
+                    offset: Offset(0, -size.height * 0.65 * _controller.value),
+                    child: child,
+                  );
+                },
+                child: Padding(
+                    padding: EdgeInsets.only(
+                      right: size.width * 0.1,
+                      left: size.width * 0.178,
+                      top: size.height * 0.8,
+                    ),
+                    child: Text(
+                      'Github Explorer',
+                      style: new TextStyle(
+                        color: Colors.black,
+                        shadows: [Shadow(color: Colors.grey, blurRadius: 10)],
+                        fontFamily: 'Sans',
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
+                        //foreground: Paint()..shader = linearGradient),
+                      ),
+                    )),
               ),
-              child: Text(
-                  'Github Explorer',
-                  style: new TextStyle(
-                    color: Colors.black,
-                    shadows: [Shadow(color: Colors.grey,blurRadius: 10)],
-                      fontFamily: 'Sans',
-                      fontSize: 30.0,
-                      fontWeight: FontWeight.bold,
-                      //foreground: Paint()..shader = linearGradient),
-                  ),)
-            ),
-            AnimatedOpacity(
-              opacity: isVisible2?1:0,
-              duration: Duration(seconds: 1),
-              curve: Curves.easeInToLinear,
-                          child: Padding(
+              AnimatedOpacity(
+                opacity: isVisible2 ? 1 : 0,
+                duration: Duration(seconds: 2),
+                curve: Curves.easeInToLinear,
+                child: Padding(
                   padding: const EdgeInsets.only(left: 8.0, top: 160, right: 8),
                   child: SingleChildScrollView(
                     child: Column(
@@ -142,18 +165,18 @@ class _SearchScreenState extends State<SearchScreen>
                         Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Material(
-              elevation: 20,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                  side: BorderSide.none),
-              shadowColor: Colors.grey,
-              child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: searchUser(setName)),
-                            ),
+                            elevation: 20,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                side: BorderSide.none),
+                            shadowColor: Colors.grey,
+                            child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                padding: EdgeInsets.only(left: 10, right: 10),
+                                child: searchUser(setName)),
+                          ),
                         ),
                         Padding(padding: EdgeInsets.only(top: 25)),
                         //search button
@@ -163,19 +186,20 @@ class _SearchScreenState extends State<SearchScreen>
                         Opacity(
                           opacity: isVisible ? 1 : 0,
                           child: Text(
-              'Something Went Wrong, Please Try Again!',
-              style: TextStyle(
-                  fontFamily: 'Sans',
-                  color: Colors.red,
-                  fontSize: 11),
+                            'Something Went Wrong, Please Try Again!',
+                            style: TextStyle(
+                                fontFamily: 'Sans',
+                                color: Colors.red,
+                                fontSize: 11),
                           ),
                         )
                       ],
                     ),
                   ),
                 ),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
