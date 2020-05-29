@@ -121,7 +121,7 @@ class _SearchScreenState extends State<SearchScreen>
       onWillPop: _willpop,
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Color.fromRGBO(102, 102, 102, 1),
           body: Stack(
             children: <Widget>[
               AnimatedBuilder(
@@ -142,7 +142,7 @@ class _SearchScreenState extends State<SearchScreen>
                       'Github Explorer',
                       style: new TextStyle(
                         color: Colors.black,
-                        shadows: [Shadow(color: Colors.grey, blurRadius: 10)],
+                        shadows: [Shadow(color: Colors.white, blurRadius: 10)],
                         fontFamily: 'Sans',
                         fontSize: 30.0,
                         fontWeight: FontWeight.bold,
@@ -169,7 +169,7 @@ class _SearchScreenState extends State<SearchScreen>
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                                 side: BorderSide.none),
-                            shadowColor: Colors.grey,
+                            shadowColor: Colors.white,
                             child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),

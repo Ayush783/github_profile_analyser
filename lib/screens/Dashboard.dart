@@ -6,6 +6,7 @@ import 'package:github_profile_analyser/screens/AboutScreen.dart';
 import 'package:github_profile_analyser/ui_models/followerButton.dart';
 import 'package:github_profile_analyser/ui_models/followerCard.dart';
 import 'package:github_profile_analyser/ui_models/followingButton.dart';
+import 'package:github_profile_analyser/ui_models/followingCard.dart';
 import 'package:github_profile_analyser/ui_models/repoButton.dart';
 import 'package:github_profile_analyser/ui_models/repoCard.dart';
 import 'package:github_profile_analyser/ui_models/starButton.dart';
@@ -20,7 +21,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   Widget _repo, _star, _flwr, _flwng;
   double e1, e2, e3, e4;
-  Widget _list = Text('');
+  Widget _list = Center(child: Text('Tap on the buttons shown above'));
   @override
   void initState() {
     super.initState();
@@ -71,7 +72,8 @@ class _DashboardState extends State<Dashboard> {
                             repo[index]['name'],
                             repo[index]['language'],
                             user.map['name'],
-                            repo[index]['html_url']))),
+                            repo[index]['html_url'],
+                            repo[index]['description']))),
               );
             }),
       );
@@ -89,22 +91,25 @@ class _DashboardState extends State<Dashboard> {
       _repo = Icon(MaterialCommunityIcons.source_repository_multiple);
       _flwng = Icon(MaterialCommunityIcons.account);
       _flwr = Icon(MaterialCommunityIcons.account_group);
-      _list = ListView.builder(
-          itemCount: star.length,
-          itemBuilder: (BuildContext ctxt, int index) {
-            return AnimationConfiguration.staggeredList(
-              position: index,
-              duration: const Duration(milliseconds: 675),
-              child: SlideAnimation(
-                  verticalOffset: 50.0,
-                  child: FadeInAnimation(
-                      child: starCard(
-                          star[index]['name'],
-                          star[index]['language'],
-                          star[index]['owner']['login'],
-                          star[index]['html_url']))),
-            );
-          });
+      _list = AnimationLimiter(
+        key: UniqueKey(),
+              child: ListView.builder(
+            itemCount: star.length,
+            itemBuilder: (BuildContext ctxt, int index) {
+              return AnimationConfiguration.staggeredList(
+                position: index,
+                duration: const Duration(milliseconds: 675),
+                child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                        child: starCard(
+                            star[index]['name'],
+                            star[index]['language'],
+                            star[index]['owner']['login'],
+                            star[index]['html_url']))),
+              );
+            }),
+      );
       setState(() {});
     }
 
@@ -162,7 +167,7 @@ class _DashboardState extends State<Dashboard> {
                 child: SlideAnimation(
                     verticalOffset: 50.0,
                     child: FadeInAnimation(
-                        child: flwrCard(
+                        child: flwngCard(
                             following[index]['login'],
                             following[index]['avatar_url'],
                             following[index]['html_url']))),
@@ -174,18 +179,17 @@ class _DashboardState extends State<Dashboard> {
 
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Color.fromRGBO(102, 102, 102, 1),
         body: Column(
           children: <Widget>[
             Container(
               height: size.height * 0.4,
               width: size.width,
               decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage('${user.map['avatar_url']}'),
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                        Colors.black.withOpacity(0.7), BlendMode.dstATop)),
-              ),
+                  color: Color.fromRGBO(51, 51, 51, 1),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(25),
+                      bottomRight: Radius.circular(25))),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10),
@@ -193,6 +197,7 @@ class _DashboardState extends State<Dashboard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Material(
+                      color: Color.fromRGBO(102, 102, 102, 1),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       elevation: 10,
@@ -206,7 +211,11 @@ class _DashboardState extends State<Dashboard> {
                               '${user.map['name']}',
                               style: TextStyle(
                                   fontFamily: 'Sans',
-                                  fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  shadows: [
+                            Shadow(color: Colors.black, blurRadius: 5)
+                          ]),
                             ),
                             GestureDetector(
                                 onTap: () {
@@ -221,18 +230,27 @@ class _DashboardState extends State<Dashboard> {
                                 },
                                 child: Icon(
                                   MaterialCommunityIcons.information_outline,
-                                  size: 15,
+                                  size: 20,
+                                  color: Colors.white,
                                 ))
                           ],
                         ),
                       ),
                     ),
+                    CircleAvatar(
+                        backgroundColor: Color.fromRGBO(102, 102, 102, 1),
+                        radius: 55,
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundImage: NetworkImage(user.map['avatar_url']),
+                        )),
                     Text(
                       '${user.map['bio']}',
                       textAlign: TextAlign.center,
+                      maxLines: 3,
                       style: TextStyle(
                           fontFamily: 'Sans',
-                          color: Colors.green,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                           shadows: [
                             Shadow(color: Colors.black, blurRadius: 5)

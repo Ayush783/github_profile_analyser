@@ -20,7 +20,7 @@ Card flwrCard(String name, String avatar, String url) {
             fontWeight: FontWeight.bold),
       ),
       leading: CircleAvatar(
-      backgroundColor: Colors.green,
+      backgroundColor: Color.fromRGBO(102, 102, 102, 1),
         child: CircleAvatar(
           radius: 18,backgroundImage: NetworkImage(avatar),),radius: 20,),
       trailing: Container(

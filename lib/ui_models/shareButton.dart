@@ -3,7 +3,8 @@ import 'package:flutter_icons/flutter_icons.dart';
 
 RawMaterialButton shareButton(Function function) {
     return RawMaterialButton(
-            elevation: 10,
+      fillColor: Colors.green,
+            elevation: 5,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
                 side: BorderSide(width: 0.8, color: Colors.black)),
@@ -19,12 +20,12 @@ RawMaterialButton shareButton(Function function) {
                       'Share Profile  ',
                       style: TextStyle(
                           fontFamily: 'Sans',
-                          color: Colors.green,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
                     Icon(
                       MaterialCommunityIcons.share,
-                      color: Colors.green,
+                      color: Colors.white,
                     )
                   ],
                 ),

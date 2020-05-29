@@ -136,6 +136,7 @@ class _AboutScreenState extends State<AboutScreen> {
 
     return SafeArea(
         child: Scaffold(
+          backgroundColor: Color.fromRGBO(102, 102, 102, 1),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
