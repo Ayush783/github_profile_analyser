@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:github_profile_analyser/DataRepository/dataRepository.dart';
+import 'package:github_profile_analyser/notifiers/notifier.dart';
 import 'package:github_profile_analyser/screens/Dashboard.dart';
 import 'package:github_profile_analyser/ui_models/G0Button.dart';
 import 'package:github_profile_analyser/ui_models/SearchTextField.dart';
@@ -77,6 +78,7 @@ class _SearchScreenState extends State<SearchScreen>
             style: TextStyle(
                 fontFamily: 'Sans', color: Colors.white, fontSize: 16),
           );
+          print(user.map['name']);
           Navigator.push(
               context,
               PageRouteBuilder(
@@ -86,7 +88,9 @@ class _SearchScreenState extends State<SearchScreen>
                     return Provider<User>.value(
                         value: user,
                         child: Provider<UserRepo>.value(
-                            value: userRepo, child: Dashboard()));
+                            value: userRepo, child: ChangeNotifierProvider<DataNotifier>(
+                              create:(context)=> DataNotifier(context),
+                              child: Dashboard())));
                   },
                   transitionDuration: Duration(milliseconds: 360),
                   transitionsBuilder: (BuildContext cpntext,
@@ -163,7 +167,7 @@ class _SearchScreenState extends State<SearchScreen>
                         Padding(padding: EdgeInsets.only(top: 125)),
                         //textfield
                         Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding:  EdgeInsets.only(left:20.0,right: 20,bottom: MediaQuery.of(context).viewInsets.bottom),
                           child: Material(
                             elevation: 20,
                             shape: RoundedRectangleBorder(

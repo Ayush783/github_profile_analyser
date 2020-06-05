@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:github_profile_analyser/DataRepository/dataRepository.dart';
+import 'package:github_profile_analyser/notifiers/notifier.dart';
 import 'package:github_profile_analyser/screens/AboutScreen.dart';
 import 'package:github_profile_analyser/ui_models/followerButton.dart';
-import 'package:github_profile_analyser/ui_models/followerCard.dart';
 import 'package:github_profile_analyser/ui_models/followingButton.dart';
-import 'package:github_profile_analyser/ui_models/followingCard.dart';
 import 'package:github_profile_analyser/ui_models/repoButton.dart';
-import 'package:github_profile_analyser/ui_models/repoCard.dart';
 import 'package:github_profile_analyser/ui_models/starButton.dart';
-import 'package:github_profile_analyser/ui_models/starCard.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
@@ -19,163 +15,25 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  Widget _repo, _star, _flwr, _flwng;
-  double e1, e2, e3, e4;
-  Widget _list = Center(child: Text('Tap on the buttons shown above'));
-  @override
-  void initState() {
-    super.initState();
-    _repo = Icon(MaterialCommunityIcons.source_repository_multiple);
-    _star = Icon(MaterialCommunityIcons.star);
-    _flwng = Icon(MaterialCommunityIcons.account);
-    _flwr = Icon(MaterialCommunityIcons.account_group);
-    e1 = 3;
-    e2 = 3;
-    e3 = 3;
-    e4 = 3;
-  }
 
   @override
   Widget build(BuildContext context) {
+    final notifier = Provider.of<DataNotifier>(context);
     final user = Provider.of<User>(context);
     final size = MediaQuery.of(context).size;
-    final userRepo = Provider.of<UserRepo>(context);
-    final List repo = userRepo.map['repo'];
-    final List star = userRepo.map['star'];
-    final List follower = userRepo.map['followers'];
-    final List following = userRepo.map['following'];
 
-    showRepo() {
-      _repo = Text(
-        '${user.map['public_repos']}',
-        style: TextStyle(
-            fontFamily: 'Sans', fontWeight: FontWeight.bold, fontSize: 20),
-      );
-      e1 = 30;
-      e2 = 3;
-      e3 = 3;
-      e4 = 3;
-      _star = Icon(MaterialCommunityIcons.star);
-      _flwng = Icon(MaterialCommunityIcons.account);
-      _flwr = Icon(MaterialCommunityIcons.account_group);
-      _list = AnimationLimiter(
-        child: ListView.builder(
-            itemCount: repo.length,
-            itemBuilder: (BuildContext ctxt, int index) {
-              return AnimationConfiguration.staggeredList(
-                position: index,
-                duration: const Duration(milliseconds: 675),
-                child: SlideAnimation(
-                    verticalOffset: 50.0,
-                    child: FadeInAnimation(
-                        child: repoCard(
-                            repo[index]['name'],
-                            repo[index]['language'],
-                            user.map['name'],
-                            repo[index]['html_url'],
-                            repo[index]['description']))),
-              );
-            }),
-      );
-      setState(() {});
-    }
-
-    showStar() {
-      _star = Text('${star.length}',
-          style: TextStyle(
-              fontFamily: 'Sans', fontWeight: FontWeight.bold, fontSize: 20));
-      e2 = 30;
-      e1 = 3;
-      e3 = 3;
-      e4 = 3;
-      _repo = Icon(MaterialCommunityIcons.source_repository_multiple);
-      _flwng = Icon(MaterialCommunityIcons.account);
-      _flwr = Icon(MaterialCommunityIcons.account_group);
-      _list = AnimationLimiter(
-        key: UniqueKey(),
-              child: ListView.builder(
-            itemCount: star.length,
-            itemBuilder: (BuildContext ctxt, int index) {
-              return AnimationConfiguration.staggeredList(
-                position: index,
-                duration: const Duration(milliseconds: 675),
-                child: SlideAnimation(
-                    verticalOffset: 50.0,
-                    child: FadeInAnimation(
-                        child: starCard(
-                            star[index]['name'],
-                            star[index]['language'],
-                            star[index]['owner']['login'],
-                            star[index]['html_url']))),
-              );
-            }),
-      );
-      setState(() {});
-    }
-
-    showFollower() {
-      _flwr = Text('${user.map['followers']}',
-          style: TextStyle(
-              fontFamily: 'Sans', fontWeight: FontWeight.bold, fontSize: 20));
-      e3 = 30;
-      e1 = 3;
-      e2 = 3;
-      e4 = 3;
-      _repo = Icon(MaterialCommunityIcons.source_repository_multiple);
-      _star = Icon(MaterialCommunityIcons.star);
-      _flwng = Icon(MaterialCommunityIcons.account);
-      _list = AnimationLimiter(
-        key: UniqueKey(),
-        child: ListView.builder(
-            itemCount: follower.length,
-            itemBuilder: (BuildContext ctxt, int index) {
-              return AnimationConfiguration.staggeredList(
-                position: index,
-                duration: const Duration(milliseconds: 675),
-                child: SlideAnimation(
-                    verticalOffset: 50.0,
-                    child: FadeInAnimation(
-                        child: flwrCard(
-                            follower[index]['login'],
-                            follower[index]['avatar_url'],
-                            follower[index]['html_url']))),
-              );
-            }),
-      );
-      setState(() {});
-    }
-
-    showFollowing() {
-      _flwng = Text('${user.map['following']}',
-          style: TextStyle(
-              fontFamily: 'Sans', fontWeight: FontWeight.bold, fontSize: 20));
-      _repo = Icon(MaterialCommunityIcons.source_repository_multiple);
-      _star = Icon(MaterialCommunityIcons.star);
-      _flwr = Icon(MaterialCommunityIcons.account_group);
-      e4 = 30;
-      e1 = 3;
-      e2 = 3;
-      e3 = 3;
-      _list = AnimationLimiter(
-        key: UniqueKey(),
-        child: ListView.builder(
-            itemCount: following.length,
-            itemBuilder: (BuildContext ctxt, int index) {
-              return AnimationConfiguration.staggeredList(
-                position: index,
-                duration: const Duration(milliseconds: 675),
-                child: SlideAnimation(
-                    verticalOffset: 50.0,
-                    child: FadeInAnimation(
-                        child: flwngCard(
-                            following[index]['login'],
-                            following[index]['avatar_url'],
-                            following[index]['html_url']))),
-              );
-            }),
-      );
-      setState(() {});
-    }
+    // showFollowing() {
+    //   _flwng = 
+    //   _repo = Icon(MaterialCommunityIcons.source_repository_multiple);
+    //   _star = Icon(MaterialCommunityIcons.star);
+    //   _flwr = Icon(MaterialCommunityIcons.account_group);
+    //   e4 = 30;
+    //   e1 = 3;
+    //   e2 = 3;
+    //   e3 = 3;
+    //   _list = ;
+    //   setState(() {});
+    // }
 
     return SafeArea(
       child: Scaffold(
@@ -269,16 +127,16 @@ class _DashboardState extends State<Dashboard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      repoButton(_repo, showRepo, e1),
-                      starButton(showStar, _star, e2),
-                      followerButton(_flwr, showFollower, e3),
-                      followingButton(_flwng, showFollowing, e4),
+                      repoButton(notifier.repo, notifier.showRepo, notifier.e1),
+                      starButton(notifier.showStar, notifier.star, notifier.e2),
+                      followerButton(notifier.flwr, notifier.showFlwr, notifier.e3),
+                      followingButton(notifier.flwng, notifier.showFlwng, notifier.e4),
                     ],
                   ),
                   Padding(padding: EdgeInsets.only(top: 15)),
                   Container(
                     child: Expanded(
-                      child: _list,
+                      child: notifier.list,
                     ),
                   ),
                 ],

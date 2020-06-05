@@ -24,8 +24,7 @@ class APIService{
     final response = await http.get(uri , headers: {'Authorization': 'Token $access_token'});
     if(response.statusCode==200){
       final List<dynamic> data = json.decode(response.body);
-      if(data.isNotEmpty)
-        return data;
+      return data;
     }
     throw response;
   }
@@ -35,8 +34,7 @@ class APIService{
     final response = await http.get(uri , headers: {'Authorization': 'Token $access_token'});
     if(response.statusCode==200){
       final List<dynamic> data = json.decode(response.body);
-      if(data.isNotEmpty)
-        return data;
+      return data;
     }
     throw response;
   }
@@ -45,8 +43,7 @@ class APIService{
     final response = await http.get(uri , headers: {'Authorization': 'Token $access_token'});
     if(response.statusCode==200){
       final List<dynamic> data = json.decode(response.body);
-      if(data.isNotEmpty)
-        return data;
+      return data;
     }
     throw response;
   }
@@ -55,8 +52,7 @@ class APIService{
     final response = await http.get(uri , headers: {'Authorization': 'Token $access_token'});
     if(response.statusCode==200){
       final List<dynamic> data = json.decode(response.body);
-      if(data.isNotEmpty)
-        return data;
+      return data;
     }
     throw response;
   }

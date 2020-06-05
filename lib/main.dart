@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:github_profile_analyser/DataRepository/dataRepository.dart';
 import 'package:github_profile_analyser/screens/SearchScreen.dart';
 import 'package:provider/provider.dart';
@@ -7,13 +8,19 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create:(context)=> DataRepository(),
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    return  MultiProvider(
+      providers: [
+        Provider<DataRepository>(create: (context)=> DataRepository(),)
+      ],
           child: MaterialApp(
-            theme: ThemeData(backgroundColor: Colors.grey),
-        home: SearchScreen(),
-          debugShowCheckedModeBanner: false,
-      ),
+                theme: ThemeData(backgroundColor: Colors.grey),
+            home: SearchScreen(),
+              debugShowCheckedModeBanner: false,
+          ),
     );
   }
 }

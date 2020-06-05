@@ -5,7 +5,7 @@ Accept: application/vnd.github.v3+json
 
 
 ###
-GET https://api.github.com/users/sgshubham98/repos
+GET https://api.github.com/users/ayush783/following
 Authorization: Token 
 
 
