@@ -19,6 +19,8 @@ class _SearchScreenState extends State<SearchScreen>
   bool isVisible;
   bool isVisible2;
   AnimationController _controller;
+  TextEditingController controller = new TextEditingController(text: '');
+  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   waitTime() async {
     await Future.delayed(Duration(milliseconds: 600));
@@ -51,12 +53,16 @@ class _SearchScreenState extends State<SearchScreen>
 
   @override
   void dispose() {
+    controller.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final data = Provider.of<DataRepository>(context, listen: false);
+    
     void search() async {
       String name;
       setState(() {
@@ -106,7 +112,11 @@ class _SearchScreenState extends State<SearchScreen>
                   }));
         }
       } catch (e) {
-        isVisible = true;
+        _scaffoldKey.currentState.showSnackBar(SnackBar(
+          content: controller.text==''?Text('Username cannot be empty',style: TextStyle(fontFamily: 'Sans'),
+        ):Text('Something went wrong!, Please try again',style: TextStyle(fontFamily: 'Sans'),)
+          ,)
+          );
         _widget = Text(
           "Go",
           style:
@@ -120,11 +130,11 @@ class _SearchScreenState extends State<SearchScreen>
       return false;
     }
 
-    final size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: _willpop,
       child: SafeArea(
         child: Scaffold(
+          key: _scaffoldKey,
           backgroundColor: Color.fromRGBO(102, 102, 102, 1),
           body: Stack(
             children: <Widget>[
@@ -159,7 +169,7 @@ class _SearchScreenState extends State<SearchScreen>
                 duration: Duration(seconds: 2),
                 curve: Curves.easeInToLinear,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 8.0, top: 160, right: 8),
+                  padding:  EdgeInsets.only(left: 8.0, top: size.height*0.25, right: 8),
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -179,7 +189,7 @@ class _SearchScreenState extends State<SearchScreen>
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                                 padding: EdgeInsets.only(left: 10, right: 10),
-                                child: searchUser(setName)),
+                                child: searchUser(controller,setName)),
                           ),
                         ),
                         Padding(padding: EdgeInsets.only(top: 25)),
@@ -187,16 +197,6 @@ class _SearchScreenState extends State<SearchScreen>
                         goButton(function: search, widget: _widget),
                         Padding(padding: EdgeInsets.only(top: 100)),
                         //show if any error comes up
-                        Opacity(
-                          opacity: isVisible ? 1 : 0,
-                          child: Text(
-                            'Something Went Wrong, Please Try Again!',
-                            style: TextStyle(
-                                fontFamily: 'Sans',
-                                color: Colors.red,
-                                fontSize: 11),
-                          ),
-                        )
                       ],
                     ),
                   ),
