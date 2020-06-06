@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
       ]);
+      SystemUiOverlayStyle(systemNavigationBarColor: Color(0xff5c5757));
     return  MultiProvider(
       providers: [
         Provider<DataRepository>(create: (context)=> DataRepository(),)

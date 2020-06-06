@@ -6,6 +6,7 @@ import 'package:github_profile_analyser/ui_models/followerCard.dart';
 import 'package:github_profile_analyser/ui_models/followingCard.dart';
 import 'package:github_profile_analyser/ui_models/repoCard.dart';
 import 'package:github_profile_analyser/ui_models/starCard.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class DataNotifier extends ChangeNotifier {
@@ -25,7 +26,7 @@ class DataNotifier extends ChangeNotifier {
     _repo = Icon(MaterialCommunityIcons.source_repository_multiple);
     _flwng = Icon(MaterialCommunityIcons.account);
     _flwr = Icon(MaterialCommunityIcons.account_group);
-    _list = Center(child: Text('Tap on the buttons shown above'));
+    _list = Center(child: Lottie.asset('images/above.json',height: 100));
   }
   //getters
   double get e1 => _e1;
@@ -52,7 +53,6 @@ class DataNotifier extends ChangeNotifier {
     Widget flwr = const Icon(MaterialCommunityIcons.account_group),
     Widget flwng = const Icon(MaterialCommunityIcons.account),
   }) {
-    print(repoNumber);
     _e1 = e1;
     _e2 = e2;
     _e3 = e3;

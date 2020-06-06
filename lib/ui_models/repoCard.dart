@@ -11,6 +11,7 @@ Card repoCard(String name, String lang, String userName, String url,String descr
       }
     }
   return Card(
+    color: Color(0xffe2ded3),
     child: ListTile(
       title: Text(
         name,

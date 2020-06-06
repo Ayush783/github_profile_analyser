@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:lottie/lottie.dart';
 
 Widget searchUser(TextEditingController controller, Function(String) function) {
   return TextField(
@@ -10,10 +10,7 @@ Widget searchUser(TextEditingController controller, Function(String) function) {
     style: TextStyle(fontFamily: 'Sans'),
     decoration: InputDecoration(
       hintText: "Enter Username",
-      prefixIcon: Icon(
-        MaterialCommunityIcons.account_search_outline,
-        color: Colors.grey[800],
-      ),
+      prefixIcon: Lottie.asset('images/search.json',height: 60),
       enabledBorder: OutlineInputBorder(borderSide: BorderSide.none),
       focusedBorder: OutlineInputBorder(borderSide: BorderSide.none),
       hintStyle: TextStyle(fontFamily: 'Sans'),

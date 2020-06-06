@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:github_profile_analyser/DataRepository/dataRepository.dart';
 import 'package:github_profile_analyser/notifiers/notifier.dart';
 import 'package:github_profile_analyser/screens/AboutScreen.dart';
@@ -7,6 +6,7 @@ import 'package:github_profile_analyser/ui_models/followerButton.dart';
 import 'package:github_profile_analyser/ui_models/followingButton.dart';
 import 'package:github_profile_analyser/ui_models/repoButton.dart';
 import 'package:github_profile_analyser/ui_models/starButton.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class Dashboard extends StatefulWidget {
@@ -21,30 +21,16 @@ class _DashboardState extends State<Dashboard> {
     final notifier = Provider.of<DataNotifier>(context);
     final user = Provider.of<User>(context);
     final size = MediaQuery.of(context).size;
-
-    // showFollowing() {
-    //   _flwng = 
-    //   _repo = Icon(MaterialCommunityIcons.source_repository_multiple);
-    //   _star = Icon(MaterialCommunityIcons.star);
-    //   _flwr = Icon(MaterialCommunityIcons.account_group);
-    //   e4 = 30;
-    //   e1 = 3;
-    //   e2 = 3;
-    //   e3 = 3;
-    //   _list = ;
-    //   setState(() {});
-    // }
-
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(102, 102, 102, 1),
+        backgroundColor: Color(0xff5c5757),
         body: Column(
           children: <Widget>[
             Container(
               height: size.height * 0.4,
               width: size.width,
               decoration: BoxDecoration(
-                  color: Color.fromRGBO(51, 51, 51, 1),
+                  color: Color(0xff363434),
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(25),
                       bottomRight: Radius.circular(25))),
@@ -55,7 +41,7 @@ class _DashboardState extends State<Dashboard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Material(
-                      color: Color.fromRGBO(102, 102, 102, 1),
+                      color: Color(0xff5c5757),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
                       elevation: 10,
@@ -69,7 +55,7 @@ class _DashboardState extends State<Dashboard> {
                               '${user.map['name']}',
                               style: TextStyle(
                                   fontFamily: 'Sans',
-                                  color: Colors.white,
+                                  color: Color(0xffefecec),
                                   fontWeight: FontWeight.bold,
                                   shadows: [
                             Shadow(color: Colors.black, blurRadius: 5)
@@ -86,17 +72,14 @@ class _DashboardState extends State<Dashboard> {
                                                 child: AboutScreen(),
                                               )));
                                 },
-                                child: Icon(
-                                  MaterialCommunityIcons.information_outline,
-                                  size: 20,
-                                  color: Colors.white,
-                                ))
+                                child: Lottie.asset('images/info1.json',height: 20),
+                                ),
                           ],
                         ),
                       ),
                     ),
                     CircleAvatar(
-                        backgroundColor: Color.fromRGBO(102, 102, 102, 1),
+                        backgroundColor: Color(0xff5c5757),
                         radius: 55,
                         child: CircleAvatar(
                           radius: 50,
@@ -108,7 +91,7 @@ class _DashboardState extends State<Dashboard> {
                       maxLines: 3,
                       style: TextStyle(
                           fontFamily: 'Sans',
-                          color: Colors.white,
+                          color: Color(0xffefecec),
                           fontWeight: FontWeight.bold,
                           shadows: [
                             Shadow(color: Colors.black, blurRadius: 5)

@@ -11,6 +11,7 @@ Card flwrCard(String name, String avatar, String url) {
       }
     }
   return Card(
+    color: Color(0xffe2ded3),
     child: ListTile(
       title: Text(
         name,

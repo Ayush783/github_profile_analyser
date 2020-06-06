@@ -11,8 +11,8 @@ Card starCard(String name, String lang ,String userName, String url) {
       }
     }
   return Card(
+    color: Color(0xffe2ded3),
     child: ListTile(
-      isThreeLine: true,
       title: Text(
         userName,
         style: TextStyle(

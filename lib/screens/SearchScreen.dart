@@ -16,7 +16,6 @@ class _SearchScreenState extends State<SearchScreen>
     with SingleTickerProviderStateMixin {
   Widget _widget;
   String username;
-  bool isVisible;
   bool isVisible2;
   AnimationController _controller;
   TextEditingController controller = new TextEditingController(text: '');
@@ -36,7 +35,7 @@ class _SearchScreenState extends State<SearchScreen>
     _controller =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
     _controller.forward();
-    isVisible = false;
+    controller.text = '';
     isVisible2 = false;
     _widget = Text(
       "Go",
@@ -76,7 +75,6 @@ class _SearchScreenState extends State<SearchScreen>
       try {
         final User user = await data.getData(name);
         final UserRepo userRepo = await data.getRepoData(user.map['login']);
-        isVisible = false;
         if (user.map.isNotEmpty) {
           FocusScope.of(context).unfocus();
           _widget = Text(
@@ -85,6 +83,9 @@ class _SearchScreenState extends State<SearchScreen>
                 fontFamily: 'Sans', color: Colors.white, fontSize: 16),
           );
           print(user.map['name']);
+          controller.text='';
+          username='';
+          setState(() {});
           Navigator.push(
               context,
               PageRouteBuilder(
@@ -135,7 +136,7 @@ class _SearchScreenState extends State<SearchScreen>
       child: SafeArea(
         child: Scaffold(
           key: _scaffoldKey,
-          backgroundColor: Color.fromRGBO(102, 102, 102, 1),
+          backgroundColor: Color(0xff5c5757),
           body: Stack(
             children: <Widget>[
               AnimatedBuilder(
@@ -183,7 +184,7 @@ class _SearchScreenState extends State<SearchScreen>
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                                 side: BorderSide.none),
-                            shadowColor: Colors.white,
+                            shadowColor: Color(0xffefecec),
                             child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),
