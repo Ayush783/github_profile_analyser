@@ -151,6 +151,100 @@ class DataNotifier extends ChangeNotifier {
     }
     notifyListeners();
   }
+  void findFollower(String value) {
+    print(_controller.text);
+    if (value == '') {
+      _list = AnimationLimiter(
+        child: ListView.builder(
+            itemCount: flwrList.length,
+            itemBuilder: (BuildContext ctxt, int index) {
+              return AnimationConfiguration.staggeredList(
+                position: index,
+                duration: const Duration(milliseconds: 675),
+                child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                        child:flwrCard(
+                          flwrList[index]['login'],
+                          flwrList[index]['avatar_url'],
+                          flwrList[index]['html_url']))),
+              );
+            }),
+      );
+    } else {
+      for (int i = 0; i < flwrList.length; i++) {
+        if (flwrList[i]['login'] == value) {
+          _list = Column(
+            children: <Widget>[
+              flwrCard(
+                          flwrList[i]['login'],
+                          flwrList[i]['avatar_url'],
+                          flwrList[i]['html_url']),
+              Container(),
+              Container(),
+            ],
+          );
+          break;
+        } else {
+          _list = Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SvgPicture.asset('images/error.svg',color: Colors.white,height: 50,width: 50,),
+              Text('Error!. Not found',style: TextStyle(fontFamily: 'Sans',color: Colors.white),)
+            ],
+          );
+        }
+      }
+    }
+    notifyListeners();
+  }
+   void findFollowing(String value) {
+    print(_controller.text);
+    if (value == '') {
+      _list = AnimationLimiter(
+        child: ListView.builder(
+            itemCount: flwngList.length,
+            itemBuilder: (BuildContext ctxt, int index) {
+              return AnimationConfiguration.staggeredList(
+                position: index,
+                duration: const Duration(milliseconds: 675),
+                child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                        child:flwngCard(
+                          flwngList[index]['login'],
+                          flwngList[index]['avatar_url'],
+                          flwngList[index]['html_url']))),
+              );
+            }),
+      );
+    } else {
+      for (int i = 0; i < flwngList.length; i++) {
+        if (flwngList[i]['login'] == value) {
+          _list = Column(
+            children: <Widget>[
+              flwngCard(
+                          flwngList[i]['login'],
+                          flwngList[i]['avatar_url'],
+                          flwngList[i]['html_url']),
+              Container(),
+              Container(),
+            ],
+          );
+          break;
+        } else {
+          _list = Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SvgPicture.asset('images/error.svg',color: Colors.white,height: 50,width: 50,),
+              Text('Error!. Not found',style: TextStyle(fontFamily: 'Sans',color: Colors.white),)
+            ],
+          );
+        }
+      }
+    }
+    notifyListeners();
+  }
 
   void showRepo({
     double e1 = 30,
@@ -218,6 +312,7 @@ class DataNotifier extends ChangeNotifier {
     Widget flwr = const Icon(MaterialCommunityIcons.account_group),
     Widget repo = const Icon(MaterialCommunityIcons.source_repository_multiple),
   }) {
+    _controller.clear();
     _e1 = e1;
     _e2 = e2;
     _e3 = e3;
@@ -245,6 +340,19 @@ class DataNotifier extends ChangeNotifier {
                           flwngList[index]['html_url']))),
             );
           }),
+    );
+    _repoSearch = new Material(
+      elevation: 20,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30), side: BorderSide.none),
+      shadowColor: Color(0xffefecec),
+      child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          padding: EdgeInsets.only(left: 10, right: 10),
+          child: searchUser(controller, findFollowing,
+              hint: "Enter Git handle", height: 60)),
     );
     notifyListeners();
   }
@@ -313,6 +421,7 @@ class DataNotifier extends ChangeNotifier {
     Widget flwng = const Icon(MaterialCommunityIcons.account),
     Widget repo = const Icon(MaterialCommunityIcons.source_repository_multiple),
   }) {
+    _controller.clear();
     _e1 = e1;
     _e2 = e2;
     _e3 = e3;
@@ -340,6 +449,19 @@ class DataNotifier extends ChangeNotifier {
                           flwrList[index]['html_url']))),
             );
           }),
+    );
+    _repoSearch = new Material(
+      elevation: 20,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30), side: BorderSide.none),
+      shadowColor: Color(0xffefecec),
+      child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          padding: EdgeInsets.only(left: 10, right: 10),
+          child: searchUser(controller, findFollower,
+              hint: "Enter Git handle", height: 60)),
     );
     notifyListeners();
   }
