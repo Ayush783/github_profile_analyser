@@ -23,6 +23,7 @@ class _DashboardState extends State<Dashboard> {
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Color(0xff5c5757),
         body: Column(
           children: <Widget>[
@@ -116,7 +117,9 @@ class _DashboardState extends State<Dashboard> {
                       followingButton(notifier.flwng, notifier.showFlwng, notifier.e4),
                     ],
                   ),
-                  Padding(padding: EdgeInsets.only(top: 15)),
+                  Padding(padding: EdgeInsets.only(top: 10)),
+                  notifier.repoSearch,
+                  Padding(padding: EdgeInsets.only(top: 10)),
                   Container(
                     child: Expanded(
                       child: notifier.list,

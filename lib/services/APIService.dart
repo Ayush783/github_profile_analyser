@@ -20,50 +20,70 @@ class APIService {
   }
 
   Future<List<dynamic>> getUserRepoData(String user) async {
+    List<dynamic> a =[];
+    for(int i=1;;i++){
     final uri =
-        api.userUri().toString() + '/$user' + '/repos?page=1&per_page=100';
+        api.userUri().toString() + '/$user' + '/repos?page=$i&per_page=100';
     final response =
         await http.get(uri, headers: {'Authorization': 'Token $access_token'});
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
-      return data;
+      a.addAll(data);
+      if(data.length<100)
+        break;
     }
-    throw response;
+    }
+    return a;
   }
 
   Future<List<dynamic>> getUserStarredData(String user) async {
+    List<dynamic> a = [];
+    for(int i =1;;i++){
     final uri =
-        api.userUri().toString() + '/$user' + '/starred?page=1&per_page=100';
+        api.userUri().toString() + '/$user' + '/starred?page=$i&per_page=100';
     final response =
         await http.get(uri, headers: {'Authorization': 'Token $access_token'});
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
-      return data;
+      a.addAll(data);
+      if(data.length<100)
+        break;
     }
-    throw response;
+    }
+    return a;
   }
 
   Future<List<dynamic>> getUserFollowerData(String user) async {
+    List<dynamic> a =[];
+    for(int i=1;;i++){
     final uri =
-        api.userUri().toString() + '/$user' + '/followers?page=1&per_page=100';
+        api.userUri().toString() + '/$user' + '/followers?page=$i&per_page=100';
     final response =
         await http.get(uri, headers: {'Authorization': 'Token $access_token'});
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
-      return data;
+      a.addAll(data);
+      if(data.length<100)
+        break;
     }
-    throw response;
+    }
+    return a;
   }
 
   Future<List<dynamic>> getUserFollowingData(String user) async {
+    List<dynamic> a=[];
+    for(int i=1;;i++){
     final uri =
-        api.userUri().toString() + '/$user' + '/following?page=1&per_page=100';
+        api.userUri().toString() + '/$user' + '/following?page=$i&per_page=100';
     final response =
         await http.get(uri, headers: {'Authorization': 'Token $access_token'});
     if (response.statusCode == 200) {
       final List<dynamic> data = json.decode(response.body);
-      return data;
+      a.addAll(data);
+      if(data.length<100)
+        break;
     }
-    throw response;
+    }
+    return a;
   }
 }
